@@ -3,6 +3,10 @@ from collections import defaultdict
 
 
 def get_transaction_list(data):
+    """
+    :param data: iterator
+    :return: it returns (items, transaction_list)
+    """
     transaction_list = []
     items = set()
     for value in data:
@@ -13,6 +17,13 @@ def get_transaction_list(data):
 
 
 def get_items_with_min_support(items, transaction_list, min_support, frequencies=None):
+    """
+    :param items: set of sets
+    :param transaction_list: array of sequences
+    :param min_support:
+    :param frequencies: dictionary which contains sets. If it is not None it will be updated during function
+    :return: it returns all sets with needed support level
+    """
     if frequencies is None:
         frequencies = defaultdict(int)
     for item in items:
@@ -28,6 +39,11 @@ def get_items_with_min_support(items, transaction_list, min_support, frequencies
 
 
 def get_items_union_with_fixed_size(items, size):
+    """
+    :param items: set of sets
+    :param size: needed size
+    :return: it returns set of all unions of the needed size
+    """
     return set(
         x.union(y)
         for x in items
@@ -37,6 +53,10 @@ def get_items_union_with_fixed_size(items, size):
 
 
 def get_all_subset(_set):
+    """
+    :param _set: set
+    :return: it returns iterator on frozenset of all subsets of _set
+    """
     return map(frozenset,
                chain(*(
                    combinations(_set, i)
@@ -45,6 +65,10 @@ def get_all_subset(_set):
 
 
 def run_apriori(data, min_support, min_confidence):
+    """
+    :param data: iterator
+    :return: it returns list of rules. Each of the rules is (set, prediction, probability)
+    """
     frequencies = defaultdict(int)
     items, transaction_list = get_transaction_list(data)
     cur_set = get_items_with_min_support(items,
