@@ -1,0 +1,8 @@
+{
+  "learning_rate": 0.002379536485181383,
+  "max_depth": 7,
+  "n_estimators": 2844,
+  "min_child_weight": 0.7720061076190281,
+  "seed": 42,
+  "gamma": 4.047782342974122
+}
