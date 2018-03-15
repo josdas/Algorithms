@@ -11,15 +11,16 @@ import pickle
 import time
 from copy import deepcopy
 
-SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
-
 
 def signal_handler(signum, frame):
     raise Exception("Timed out!")
 
 
+DATA_PATH = '/HR.csv'
+
+
 class Checker:
-    def __init__(self, data_path=SCRIPT_DIR + '/HR.csv'):
+    def __init__(self, data_path=DATA_PATH):
         df = pandas.read_csv(data_path)
         target = 'left'
         features = [c for c in df if c != target]
@@ -56,7 +57,7 @@ TYPES = {
     "gamma": float
 }
 
-MAX_CHANGE_TYPE = {
+MAX_CHANGE = {
     "learning_rate": 1.3,
     "max_depth": 1.2,
     "n_estimators": 1.3,
@@ -65,7 +66,7 @@ MAX_CHANGE_TYPE = {
 }
 
 PROB_CHANGE = 0.6
-MAX_CHANGE = 0.5
+EPS = 0.0004
 
 if __name__ == '__main__':
     random.seed(47)
@@ -108,7 +109,7 @@ if __name__ == '__main__':
         print('Score:', new_score)
         print('Best:', cur_score)
 
-        if cur_score <= new_score + 0.0004:
+        if cur_score <= new_score + EPS:
             if cur_score < new_score:
                 print('New best score:', new_score)
                 cur_score = new_score
