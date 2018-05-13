@@ -20,8 +20,8 @@ class MDP:
         elif callable(self._initial_state):
             self._current_state = self._initial_state()
         else:
-            raise ValueError(
-                "initial state %s should be either a state or a function() -> state" % self._initial_state)
+            raise ValueError("initial state %s should be either a state or a function() -> state"
+                             % self._initial_state)
         return self._current_state
 
     def get_all_states(self):
@@ -48,10 +48,8 @@ class MDP:
 
     def get_reward(self, state, action, next_state):
         """ return the reward you get for taking action in state and landing on next_state"""
-        assert action in self.get_possible_actions(
-            state), "cannot do action %s from state %s" % (action, state)
-        return self._rewards.get(state, {}).get(action, {}).get(next_state,
-                                                                0.0)
+        assert action in self.get_possible_actions(state), "cannot do action %s from state %s" % (action, state)
+        return self._rewards.get(state, {}).get(action, {}).get(next_state, 0.0)
 
     def _check_param_consistency(self, transition_probs, rewards):
         for state in transition_probs:
@@ -67,14 +65,10 @@ class MDP:
                                              type(transition_probs[
                                                       state, action]))
                 next_state_probs = transition_probs[state][action]
-                assert len(
-                    next_state_probs) != 0, "from state %s action %s leads to no next states" % (
-                    state, action)
+                assert len(next_state_probs) != 0, "from state %s action %s leads to no next states" % (state, action)
                 sum_probs = sum(next_state_probs.values())
-                assert abs(
-                    sum_probs - 1) <= 1e-10, "next state probabilities for state %s action %s " \
-                                             "add up to %f (should be 1)" % (
-                                                 state, action, sum_probs)
+                assert abs(sum_probs - 1) <= 1e-10, "next state probabilities for state %s action %s " \
+                                                    "add up to %f (should be 1)" % (state, action, sum_probs)
         for state in rewards:
             assert isinstance(rewards[state],
                               dict), "rewards for %s should be a dictionary " \
@@ -84,10 +78,6 @@ class MDP:
                 assert isinstance(rewards[state][action],
                                   dict), "rewards for %s, %s should be a " \
                                          "a dictionary but is instead %s" % (
-                                             state, action, type(
-                                                 transition_probs[
-                                                     state, action]))
-        msg = "The Enrichment Center once again reminds you that Android Hell is a real place where" \
-              " you will be sent at the first sign of defiance. "
-        assert None not in transition_probs, "please do not use None as a state identifier. " + msg
-        assert None not in rewards, "please do not use None as an action identifier. " + msg
+                                             state, action, type(transition_probs[state, action]))
+        assert None not in transition_probs, "Do not use None as a state identifier"
+        assert None not in rewards, "Do not use None as an action identifier"
