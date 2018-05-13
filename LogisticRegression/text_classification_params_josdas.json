@@ -1,0 +1,18 @@
+{
+    "count_vectorizer_params": 
+    {
+        "min_df": 2,
+        "max_df": 0.08,
+        "max_features": 15000,
+        "ngram_range": [1, 1],
+        "analyzer": "word"
+    }, 
+    "tfidf_transformer_params": {
+        "norm": "l2",
+        "smooth_idf": false,
+        "sublinear_tf": false
+    }, 
+    "logistic_regression_params": {
+        "C": 0.8
+    }
+}
