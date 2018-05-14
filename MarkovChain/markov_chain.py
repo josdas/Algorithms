@@ -29,5 +29,5 @@ def fundamental_matrix(Q):
 
 
 def coding_start_probs(start_probs, absorbing, nonabsoring):
-    return [start_probs[v] for v in absorbing], \
-           [start_probs[v] for v in nonabsoring]
+    return [start_probs[v] for v in sorted(absorbing.values())], \
+           [start_probs[v] for v in sorted(nonabsoring.values())]
