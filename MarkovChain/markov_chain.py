@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def absorbing_coding(mchain):
+def chain_coding(mchain):
     absorbing, nonabsoring = {}, {}
     for v, e in mchain.items():
         if len(e) == 0:

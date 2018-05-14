@@ -2,15 +2,18 @@ from markov_chain import *
 from collections import Counter
 
 
+def calc_probability(Q, R, b_non, b_abs):
+    N = fundamental_matrix(Q)
+    return b_non @ N @ R + b_abs
+
+
 def probability(mchain, start_probs):
-    absorbing, nonabsoring = absorbing_coding(mchain)
+    absorbing, nonabsoring = chain_coding(mchain)
 
     b_abs, b_non = coding_start_probs(start_probs, absorbing, nonabsoring)
     Q, R = qr_matrix(mchain, absorbing, nonabsoring)
 
-    N = fundamental_matrix(Q)
-
-    probs = b_non @ N @ R + b_abs
+    probs = calc_probability(Q, R, b_non, b_abs)
 
     return {
         s: probs[i]

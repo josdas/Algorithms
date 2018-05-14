@@ -2,7 +2,7 @@ from markov_chain import *
 
 
 def expected_value(mchain, rewards, start_probs):
-    absorbing, nonabsoring = absorbing_coding(mchain)
+    absorbing, nonabsoring = chain_coding(mchain)
 
     b_abs, b_non = coding_start_probs(start_probs, absorbing, nonabsoring)
     Q, R = qr_matrix(mchain, absorbing, nonabsoring)
@@ -19,7 +19,6 @@ def expected_value(mchain, rewards, start_probs):
 
 
 def monte_carlo_ev(mchain, rewards, start_probs, test_n=10000):
-
     v2i = {v: i for i, v in enumerate(start_probs)}
     i2v = {i: v for v, i in v2i.items()}
     n = len(v2i)
