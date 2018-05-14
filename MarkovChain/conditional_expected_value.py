@@ -14,7 +14,7 @@ def conditional_ev(mchain, rewards, start_probs, n_iter=2 ** 20):
 
     n_abs, n_non = len(b_abs), len(b_non)
 
-    ones_aa = np.eye(n_abs)
+    eye_aa = np.eye(n_abs)
     zeros_an = np.zeros((n_abs, n_non))
     zeros_aa = np.zeros((n_abs, n_abs))
     zeros_na = np.zeros((n_non, n_abs))
@@ -28,10 +28,10 @@ def conditional_ev(mchain, rewards, start_probs, n_iter=2 ** 20):
     start = np.concatenate([prob_non, cond_ev_non, cond_ev_absorb, prob_absorb])
 
     one_step = np.block([
-        [Q, WQ, WR, R],
-        [zeros_nn, Q, R, zeros_na],
-        [zeros_an, zeros_an, ones_aa, zeros_aa],
-        [zeros_an, zeros_an, zeros_aa, ones_aa],
+        [Q,        WQ,       WR,       R],
+        [zeros_nn, Q,        R,        zeros_na],
+        [zeros_an, zeros_an, eye_aa,   zeros_aa],
+        [zeros_an, zeros_an, zeros_aa, eye_aa],
     ])
 
     n_steps = np.linalg.matrix_power(one_step, n_iter)
